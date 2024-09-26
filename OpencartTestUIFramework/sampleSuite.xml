@@ -5,6 +5,7 @@
     </listeners>
     <test name="Sample Tests">
         <classes>
+        	<class name="testcases.SampleGlobalSetup"/>
             <class name="testcases.SampleTest1"/>
             <class name="testcases.SampleTest2"/>
         </classes>

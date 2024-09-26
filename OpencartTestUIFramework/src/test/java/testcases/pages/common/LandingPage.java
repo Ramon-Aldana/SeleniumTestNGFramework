@@ -1,5 +1,5 @@
 //Page Object Model (POM) pattern.
-package testcases;
+package testcases.pages.common;
 
 import org.openqa.selenium.WebDriver;
 
