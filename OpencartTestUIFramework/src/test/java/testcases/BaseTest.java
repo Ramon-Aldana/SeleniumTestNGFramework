@@ -9,10 +9,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import pageobjects.BasePage;
-import pageobjects.LandingPage;
 
-public class BaseTest {
+public abstract class BaseTest {
 
 	// protected allows subclasses to access the fields directly, enabling them to
 	// inherit and utilize those fields as needed.
@@ -35,15 +33,14 @@ public class BaseTest {
 		driver.manage().window().maximize();
 		driver.get("http://localhost/oc/index.php");
 		
-		// Call the method that can be overridden by subclasses
+		//// Template Method Pattern:  Call the method that can be overridden by subclasses
         afterConstruction();
         
 	}
 
 	// Template Method Pattern: Define a protected method in the superclass that will be called at the end of the superclass constructor.
-	protected void afterConstruction() {
-        // Default implementation (can be empty)
-    }
+	//// Abstract method to force subclass implementation
+	protected abstract void afterConstruction();
 	
 	@BeforeMethod
 	public void setupBeforeMethod() {
