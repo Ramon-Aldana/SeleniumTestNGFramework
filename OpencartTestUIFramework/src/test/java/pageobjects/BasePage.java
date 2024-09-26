@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import utilities.PageUtils;
 
-class BasePage {
+public class BasePage {
 
 	 WebDriver driver;
 	 PageUtils pageutils;
