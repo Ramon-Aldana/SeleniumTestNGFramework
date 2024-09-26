@@ -16,19 +16,13 @@ public class BasePage {
 	 PageUtils pageutils;
 	 
 	 public BasePage(WebDriver driver){
-
 		//The initElements method of PageFactory is used to initialize all elements in a page object class.
 		 PageFactory.initElements(driver,this );
 		 this.pageutils = new PageUtils(driver);
 		 
-		 
 		 //Wait for page to load.
 		 pageutils.waitForPageToLoad();
-		 
-		 
 		 this.driver = driver;
-		 
-		 
 	 }
 	 
 		//Single Responsibility Principle: the class is only responsible for managing the HeaderSection and FooterSection instances
