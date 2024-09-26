@@ -1,6 +1,9 @@
 package testcases;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,22 +24,28 @@ public abstract class BaseTest {
 	// additional accessor methods
 	protected WebDriver driver;
 	protected Logger logger; // Make sure to import org.apache.logging.log4j.Logger;
-	
+	protected Properties properties;
 	
 	//Multiple Declarations: The syntax used allows for the declaration of multiple variables of the same type in a single line, which helps in keeping the code concise
 	String os, browser;
 
 	
 	@BeforeClass
-	public void setupBeforeClass() {
+	public void setupBeforeClass() throws IOException {
 		System.out.println("Setup before any methods in class.");
 
 		logger = LogManager.getLogger(this.getClass()); // Make sure to import org.apache.logging.log4j.LogManager;
 		driver = new ChromeDriver();
+		properties = new Properties();
+		
+		FileReader propFile = new FileReader("./src//test//resources//config.properties");
+		properties.load(propFile);
+		
+		
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.manage().window().maximize();
-		driver.get("http://localhost/oc/index.php");
+		driver.get(properties.getProperty("AppURL")); //Read from properties file
 
 		//// Template Method Pattern: Call the method that can be overridden by
 		//// subclasses

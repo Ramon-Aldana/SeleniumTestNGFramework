@@ -1,5 +1,8 @@
 package testcases.pages.account;
 
+import java.io.IOException;
+
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.github.javafaker.Faker;
@@ -8,6 +11,7 @@ import pageobjects.HeaderSection;
 import pageobjects.OCForm;
 import pageobjects.RegisterAccountPage;
 import testcases.BaseTest;
+import utilities.ExcelDataProvider;
 
 public class Register extends BaseTest {
 	
@@ -60,4 +64,43 @@ public class Register extends BaseTest {
 		form.SetField("Password",fakeData.internet().password());
 	}
 
+	@Test(dataProvider="RegistrationData")
+	public void testUserRegistrationScenarios(String firstName, String lastName, String eMail, String password, String expected) {
+		logger.info("Get Header Section to navigate to register page");
+		HeaderSection header = register.getHeaderSection();
+		
+		// Here we get back WebElement. We could introduce Bot pattern used on another test.
+		logger.info("Click on My Account");
+		header.MyAccount.click();
+		logger.info("Click on Register");
+		header.Register.click();
+		
+		logger.info("Get generic OpenCart Bot form");
+		OCForm form = register.getOCForm();
+
+		
+		//BOT pattern (calling .SetField to encapsulate the field's action).
+		//Not recommended for maintainability of test cases, but it could unblock testers while the full POM component is implemented.
+		form.SetField("First Name",firstName);
+		form.SetField("Last Name",lastName);
+		form.SetField("E-Mail",eMail);
+		form.SetField("Password",password);
+		
+		//Assertions can be generalized leveraging: String expected parameter
+	}
+
+	
+	/* General @DataProvider accessible to testers whiting the class context
+		Flexibility: Testers can easily use any Excel file as a data source.
+		Generality: Works with any Excel file, reusable across tests.
+		Data-Driven: Supports data-driven testing for varied scenarios.
+		Scalability: Manages growing test cases with externalized data.
+		Maintainability: Easier to update test cases via Excel sheets.
+		Reusability: Consistent and reusable for different tests.
+	 */
+	@DataProvider(name = "RegistrationData")
+	public String[][] RegistrationData() throws IOException {
+		return ExcelDataProvider.readExcelToArray(".//testdata//UserData.xlsx", null);
+	}
+	
 }

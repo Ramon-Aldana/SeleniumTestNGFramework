@@ -30,17 +30,20 @@ public class Home extends BaseTest {
 	 */
 
 	@Test
-	public void testPageLoaded(ITestContext context) throws InterruptedException {
+	public void testPageLoaded(ITestContext context) throws InterruptedException  {
 		Thread.sleep(Duration.ofSeconds(2));
 	}
 
 	@Test
-	public void testCarouselSection(ITestContext context) {
+	public void testCarouselSection(ITestContext context)  {
 		Assert.assertTrue(home.Carousel.isDisplayed());
+		home.Utilities.flashElement(home.Carousel, Duration.ofSeconds(3));
+		
 	}
 
 	@Test
-	public void testCarouselBannerSection(ITestContext context) {
+	public void testCarouselBannerSection(ITestContext context) throws InterruptedException {
 		Assert.assertTrue(home.CarouselBanner.isDisplayed());
+		home.Utilities.flashElement(home.CarouselBanner, Duration.ofSeconds(3));
 	}
 }
