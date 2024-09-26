@@ -2,6 +2,8 @@ package testcases.pages.account;
 
 import org.testng.annotations.Test;
 
+import com.github.javafaker.Faker;
+
 import pageobjects.HeaderSection;
 import pageobjects.OCForm;
 import pageobjects.RegisterAccountPage;
@@ -28,20 +30,34 @@ public class Register extends BaseTest {
 	*/
 	@Test
 	public void testValidUserRegistration() {
-		
+		logger.info("Get Header Section to navigate to register page");
 		HeaderSection header = register.getHeaderSection();
 		
 		// Here we get back WebElement. We could introduce Bot pattern used on another test.
+		logger.info("Click on My Account");
 		header.MyAccount.click();
+		logger.info("Click on Register");
 		header.Register.click();
 		
-		//BOT pattern (calling .SetField to encapsualte the field's action).
-		//Not recommended for maintainability of test cases, but it could unblock testers while the full POM component is implemented.
+		logger.info("Get generic OpenCart Bot form");
 		OCForm form = register.getOCForm();
-		form.SetField("First Name","Ramon");
-		form.SetField("Last Name","Aldana");
-		form.SetField("E-Mail","ramon.aldana@opencart.com");
-		form.SetField("Password","secretword");
+		
+		/*
+		 * Using com.github.javafaker allows 
+		 * Generates realistic fake data such as names, addresses, and phone numbers for testing purposes.
+		 * Enhances test case flexibility by avoiding hardcoded values and providing dynamic data.
+		 * Supports multiple locales, making it useful for testing applications in different regions.
+		 */
+		
+		logger.info("Get Faker instance to fake data");
+		Faker fakeData = new Faker();
+		
+		//BOT pattern (calling .SetField to encapsulate the field's action).
+		//Not recommended for maintainability of test cases, but it could unblock testers while the full POM component is implemented.
+		form.SetField("First Name",fakeData.name().firstName());
+		form.SetField("Last Name",fakeData.name().lastName());
+		form.SetField("E-Mail",fakeData.internet().emailAddress(null));
+		form.SetField("Password",fakeData.internet().password());
 	}
 
 }

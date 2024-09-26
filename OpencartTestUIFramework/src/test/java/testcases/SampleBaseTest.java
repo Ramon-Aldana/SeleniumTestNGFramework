@@ -6,13 +6,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
-
-public abstract class BaseTest {
+public abstract class SampleBaseTest {
 
 	// protected allows subclasses to access the fields directly, enabling them to
 	// inherit and utilize those fields as needed.
@@ -21,25 +23,38 @@ public abstract class BaseTest {
 	// additional accessor methods
 	protected WebDriver driver;
 	protected Logger logger; // Make sure to import org.apache.logging.log4j.Logger;
-	
-	
-	//Multiple Declarations: The syntax used allows for the declaration of multiple variables of the same type in a single line, which helps in keeping the code concise
-	String os, browser;
 
-	
 	@BeforeClass
-	public void setupBeforeClass() {
+	@Parameters({ "os", "browser" })
+	public void setupBeforeClass(String os, String browser) {
 		System.out.println("Setup before any methods in class.");
-
 		logger = LogManager.getLogger(this.getClass()); // Make sure to import org.apache.logging.log4j.LogManager;
-		driver = new ChromeDriver();
-		driver.manage().deleteAllCookies();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-		driver.get("http://localhost/oc/index.php");
 
+		logger.info("About to get Driver: " + browser);
+		switch (browser.toLowerCase()) {
+		case "chrome":
+			driver = new ChromeDriver();
+			break;
+		case "edge":
+			driver = new EdgeDriver();
+			break;
+		case "firefox":
+			driver = new FirefoxDriver();
+			break;
+		default:
+			logger.info("Invalid Driver");
+			return;
+		}
+
+		logger.info("manage().deleteAllCookies()");
+		driver.manage().deleteAllCookies();
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		logger.info("manage().window().maximize()");
+		driver.manage().window().maximize();
 		//// Template Method Pattern: Call the method that can be overridden by
 		//// subclasses
+		logger.info("call afterConstruction()");
 		afterConstruction();
 
 	}
