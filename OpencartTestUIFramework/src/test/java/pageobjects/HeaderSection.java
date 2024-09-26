@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-class HeaderSection {
+public class HeaderSection {
 	
 	public HeaderSection(WebDriver driver) {
 		//The initElements method of PageFactory is used to initialize all elements in a page object class.
@@ -18,10 +18,10 @@ class HeaderSection {
 	WebElement TelephoneNumber ;
 	
 	@FindBy(xpath="//span[normalize-space()='My Account']")
-	WebElement MyAccount ;
+	public WebElement MyAccount ;
 	
 		@FindBy(linkText="Register")
-		WebElement Register;
+		public WebElement Register;
 		
 		@FindBy(linkText="Login")
 		WebElement Login;

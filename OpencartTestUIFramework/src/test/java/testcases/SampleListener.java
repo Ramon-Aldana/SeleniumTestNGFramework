@@ -4,6 +4,13 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+/*
+Observer Pattern:
+Subject: The TestNG framework (the test execution engine) acts as the subject, which triggers events during test execution (start, pass, fail, skip, etc.).
+Observers: The TestListener or any class that implements TestNG's listener interfaces (like ITestListener, ISuiteListener, etc.) observes these events.
+Notifications: When certain test events occur (e.g., test starts, test finishes, test fails), the listener receives notifications and can execute custom logic based on these events.
+ */
+
 public class SampleListener implements ITestListener {
 
     @Override

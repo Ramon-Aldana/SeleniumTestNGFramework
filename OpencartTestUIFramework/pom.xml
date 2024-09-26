@@ -6,6 +6,29 @@
 	<artifactId>OpencartTestUIFramework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.5.0</version> 
+				<configuration>
+					<!-- Path to the rules file -->
+					<configLocation>checkstyle.xml</configLocation> 
+					<consoleOutput>true</consoleOutput>
+					<failOnViolation>true</failOnViolation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 

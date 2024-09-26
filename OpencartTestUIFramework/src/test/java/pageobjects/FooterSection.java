@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-class FooterSection {
+public class FooterSection {
 	
 	public FooterSection(WebDriver driver) {
 		//The initElements method of PageFactory is used to initialize all elements in a page object class.
