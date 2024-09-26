@@ -1,10 +1,12 @@
 package testcases.pages.common;
 
+import org.testng.annotations.Test;
+
 import java.time.Duration;
 
 import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.annotations.Test;
+
 
 import pageobjects.LandingPage;
 import testcases.BaseTest;
@@ -32,6 +34,7 @@ public class Home extends BaseTest {
 	@Test
 	public void testPageLoaded(ITestContext context) throws InterruptedException  {
 		Thread.sleep(Duration.ofSeconds(2));
+		Assert.fail("Mock Fail");
 	}
 
 	@Test

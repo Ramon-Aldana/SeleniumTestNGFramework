@@ -54,29 +54,22 @@
 			<version>3.17.0</version>
 		</dependency>
 
+
 		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.11</version> <!-- required version for container FROM
-			maven:3.6.3-jdk-8 -->
+			<version>7.10.2</version>
 			<scope>test</scope>
 		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>4.1.1</version>
+			<version>5.1.2</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.aventstack/klov-reporter -->
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>klov-reporter</artifactId>
-			<version>5.1.0</version>
-		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>

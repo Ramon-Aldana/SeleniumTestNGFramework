@@ -1,12 +1,17 @@
 package testcases;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
@@ -22,7 +27,7 @@ public abstract class BaseTest {
 	// Framework Design: Using protected fields can make it easier for developers to
 	// create subclasses that require access to certain fields without needing
 	// additional accessor methods
-	protected WebDriver driver;
+	protected static WebDriver driver;
 	protected Logger logger; // Make sure to import org.apache.logging.log4j.Logger;
 	protected Properties properties;
 	
@@ -58,6 +63,18 @@ public abstract class BaseTest {
 	//// Abstract method to force subclass implementation
 	protected abstract void afterConstruction();
 
+	public static String captureScreenshot(String name) {
+		String timeStamp = new SimpleDateFormat("yyyMMddhhmmss").format(new Date());
+		TakesScreenshot camera = (TakesScreenshot)driver;
+		File sourceFile = camera.getScreenshotAs(OutputType.FILE);
+		String targetFilePath = System.getProperty("user.dir") + "\\screenshots\\" + name + "_" + timeStamp + ".png";
+		File targetFile = new File(targetFilePath);
+		sourceFile.renameTo(targetFile);
+		
+		
+		return targetFilePath;
+	}
+	
 	@BeforeMethod
 	public void setupBeforeMethod() {
 		System.out.println("Setup before each test method.");
