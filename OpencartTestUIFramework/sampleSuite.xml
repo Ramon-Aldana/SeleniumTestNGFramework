@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="5" parallel="tests">
-	
+
 	<listeners>
 		<listener class-name="testcases.SampleListener" />
 	</listeners>
-	
+
 	<test name="Sample Chrome">
-		<parameter name="os" value="Windows"></parameter>
+		<parameter name="os" value="Linux"></parameter>
 		<parameter name="browser" value="Chrome"></parameter>
 
 		<classes>
@@ -14,14 +14,15 @@
 			<class name="testcases.SampleTest2" />
 		</classes>
 	</test>
-	
-	<test name="Sample Edge">
-		<parameter name="os" value="Windows"></parameter>
-		<parameter name="browser" value="Edge"></parameter>
+
+	<test name="Sample Firefox">
+		<parameter name="os" value="Linux"></parameter>
+		<parameter name="browser" value="Firefox"></parameter>
 
 		<classes>
 			<class name="testcases.SampleTest1" />
 			<class name="testcases.SampleTest2" />
 		</classes>
 	</test>
+
 </suite>

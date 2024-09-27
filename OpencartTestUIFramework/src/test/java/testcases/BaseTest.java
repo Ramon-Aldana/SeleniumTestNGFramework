@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 
+
 public abstract class BaseTest {
 
 	// protected allows subclasses to access the fields directly, enabling them to

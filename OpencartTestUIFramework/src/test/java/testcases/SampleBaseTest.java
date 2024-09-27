@@ -1,13 +1,22 @@
 package testcases;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -23,32 +32,74 @@ public abstract class SampleBaseTest {
 	// additional accessor methods
 	protected WebDriver driver;
 	protected Logger logger; // Make sure to import org.apache.logging.log4j.Logger;
+	protected Properties properties;
 
 	@BeforeClass
 	@Parameters({ "os", "browser" })
-	public void setupBeforeClass(String os, String browser) {
+	public void setupBeforeClass(String os, String browser) throws IOException, URISyntaxException {
 		System.out.println("Setup before any methods in class.");
 		logger = LogManager.getLogger(this.getClass()); // Make sure to import org.apache.logging.log4j.LogManager;
 
-		logger.info("About to get Driver: " + browser);
-		switch (browser.toLowerCase()) {
-		case "chrome":
-			driver = new ChromeDriver();
-			break;
-		case "edge":
-			driver = new EdgeDriver();
-			break;
-		case "firefox":
-			driver = new FirefoxDriver();
-			break;
-		default:
-			logger.info("Invalid Driver");
-			return;
-		}
+		properties = new Properties();
+		FileReader propFile = new FileReader("./src//test//resources//config.properties");
+		properties.load(propFile);
 
+		logger.info("About to get Driver: " + browser);
+
+		if (properties.getProperty("execution_env").equalsIgnoreCase("remote")) {
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+
+			switch (os.toLowerCase()) {
+			case "windows":
+				capabilities.setPlatform(Platform.WIN11);
+				break;
+			case "mac":
+				capabilities.setPlatform(Platform.MAC);
+				break;
+			case "linux":
+				capabilities.setPlatform(Platform.LINUX);
+				break;
+			default:
+				System.out.println("No matching os: " + os);
+				return;
+			}
+			switch (browser.toLowerCase()) {
+			case "chrome":
+				capabilities.setBrowserName(Browser.CHROME.browserName());
+				break;
+			case "edge":
+				capabilities.setBrowserName(Browser.EDGE.browserName());
+				break;
+			case "firefox":
+				capabilities.setBrowserName(Browser.FIREFOX.browserName());
+				break;
+			default:
+				System.out.println("No matching browser: " + browser);
+				return;
+			}
+
+			driver = new RemoteWebDriver((new URI(properties.getProperty("hubURL")).toURL()), capabilities);
+		} else {
+
+			switch (browser.toLowerCase()) {
+			case "chrome":
+				driver = new ChromeDriver();
+				break;
+			case "edge":
+				driver = new EdgeDriver();
+				break;
+			case "firefox":
+				driver = new FirefoxDriver();
+				break;
+			default:
+				logger.info("Invalid Driver");
+				return;
+			}
+		}
+		
 		logger.info("manage().deleteAllCookies()");
 		driver.manage().deleteAllCookies();
-		
+
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		logger.info("manage().window().maximize()");
 		driver.manage().window().maximize();
