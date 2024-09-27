@@ -17,7 +17,7 @@ public class SampleTest1 extends SampleBaseTest {
     @Test
     public void testMethod1_2() {
         System.out.println("Executing Test Method 2");
-        assert true : "Test Method 2 failed"; // Example failure,but keep passing because it is confusing
+        
     }
 
     @Test
@@ -29,6 +29,7 @@ public class SampleTest1 extends SampleBaseTest {
 	protected void afterConstruction() {
 		logger.info("in afterConstruction() for SampleTest1");
 		driver.get("http://www.google.com");
+		logger.info("Website 1 Title: " + driver.getTitle());
 		
 	}
 

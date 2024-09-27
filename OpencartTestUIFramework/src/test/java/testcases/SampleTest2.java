@@ -29,6 +29,7 @@ public class SampleTest2 extends SampleBaseTest {
 		// TODO Auto-generated method stub
 		logger.info("in afterConstruction() for SampleTest2");
 		driver.get("http://www.amazon.com");
+		logger.info("Website 2 Title: " + driver.getTitle());
 	}
 
 
